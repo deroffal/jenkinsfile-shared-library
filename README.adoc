@@ -1,0 +1,62 @@
+= Jenkins shared library =
+
+Création d'une librairie partagée de pipeline à destination de Jenkins.
+
+== Documentation ==
+ - Créer une librairie : https://jenkins.io/doc/book/pipeline/shared-libraries/[Documentation Jenkins]
+ - Tester un jenkinsfile : https://github.com/jenkinsci/JenkinsPipelineUnit[Projet Github]
+
+== Création ==
+Dans le dossier `vars`, on stocke les scripts groovy qui vont être exposés dans les pipelines en tant que variables.
+Si un fichier `vars/classe.groovy` contient la méthode `def fonction(arg)`, alors cette dernière pourra être appelée dans un pipeline de cette façon : `classe.fonction "argument..."`.
+Si le fichier contient une méthode `def call(args)`, on pourra utiliser `classe(argument...)` pour appeler la méthode.
+
+== Cas d'utilisation ==
+Un repo Github contient le script suivant :
+----
++- vars
+|   +- classe.groovy
+----
+
+*vars/classe.groovy :*
+[source,groovy]
+----
+def call(def msg) {
+    echo "call : $msg"
+}
+
+def fonction(def msg){
+  echo "classe.fonction : $msg"
+}
+----
+
+Après avoir installé la librairie (ici sous le nom _my-library_) sur le Jenkins, on peut créer un projet pipeline dans lequel on demande d'éxecuter un simple pipeline script :
+[source,groovy]
+----
+@Library('my-library') _
+
+classe 'Bonjour!'
+classe.fonction 'Au revoir!'
+----
+[NOTE]
+====
+Il est possible de préciser la branche ou le tag de la librairie désirée en précisant `@Library('my-library@${tagOuBranche}')`.
+====
+L'éxecution du pipeline donne alors :
+----
+[Pipeline] echo
+classe : Bonjour!
+[Pipeline] echo
+classe.fonction : Au revoir!
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+----
+
+[NOTE]
+====
+Ajouter le caractère `_` à la suite de l'annotation déclarant la librairie permet de remplacer, dans le cas où les seules resources à utiliser sont dans le dossier `vars`, l'annotation de
+ l'import du script :
+
+ @Library('my-library')
+ import vars.classe
+====
