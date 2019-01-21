@@ -33,7 +33,7 @@ def fonction(def msg){
 Après avoir installé la librairie (ici sous le nom _my-library_) sur le Jenkins, on peut créer un projet pipeline dans lequel on demande d'éxecuter un simple pipeline script :
 [source,groovy]
 ----
-@Library('my-library') _
+@Library('my-library@getting-started') _
 
 classe 'Bonjour!'
 classe.fonction 'Au revoir!'
@@ -41,6 +41,7 @@ classe.fonction 'Au revoir!'
 [NOTE]
 ====
 Il est possible de préciser la branche ou le tag de la librairie désirée en précisant `@Library('my-library@${tagOuBranche}')`.
+Ici, j'ai donc indiqué que je souhaite utilisé la branche `getting-started`.
 ====
 L'éxecution du pipeline donne alors :
 ----
