@@ -14,16 +14,19 @@ def execute(def config) {
             mvn 'clean package -DskipTests', config
         }
 
-        stageLogged('Tests') {
+        stageLogged('Tests unitaires') {
             if (!params.SkipTests) {
-                parallel(
-                        "unit": { mvn 'surefire:test -DtestFailureIgnore=true', config },
-                        "integration": { mvn 'failsafe:integration-test -DskipAfterFailureCount=999', config }
-                )
+                mvn 'surefire:test -DtestFailureIgnore=true', config
             }
         }
 
-        stageLogged('SonarQube analysis') {
+        stageLogged("Tests d'intégration") {
+            if (!params.SkipTests) {
+                mvn 'failsafe:integration-test -DskipAfterFailureCount=999', config
+            }
+        }
+
+        stageLogged('Analyse SonarQube') {
             if (env.getEnvironment().BRANCH_NAME == 'master') {
                 withSonarQubeEnv('SonarDeroffal') {
                     mvn 'clean org.jacoco:jacoco-maven-plugin:prepare-agent package failsafe:integration-test sonar:sonar', config
