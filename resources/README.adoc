@@ -1,0 +1,5 @@
+= Jenkinsfile =
+
+Des `Jenkinsfile` de divers projets :
+
+ * link:springboot-maven.groovy[Jenkinsfile] pour un projet Maven/Springboot.
