@@ -11,7 +11,7 @@ def execute(def config) {
         }
 
         stageLogged('Build') {
-            mvn 'clean package -DskipTests', config
+            mvn 'clean install -DskipTests', config
         }
 
         stageLogged('Tests unitaires') {
