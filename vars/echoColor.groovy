@@ -5,7 +5,7 @@ def call(def msg, String color) {
 }
 
 
-String colorCodeOf(String color) {
+private String colorCodeOf(String color) {
     switch (color) {
         case 'cyan': return cyan
         case 'magenta': return magenta

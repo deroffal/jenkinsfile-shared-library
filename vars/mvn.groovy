@@ -6,3 +6,15 @@ def call(def cmd, def config) {
         sh "mvn -B $cmd"
     }
 }
+
+def build(def config) {
+    call 'clean install -DskipTests', config
+}
+
+def test(def config) {
+    call 'surefire:test -DtestFailureIgnore=true', config
+}
+
+def integrationTest(def config) {
+    call 'failsafe:integration-test -DskipAfterFailureCount=999', config
+}

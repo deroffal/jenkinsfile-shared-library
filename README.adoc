@@ -35,3 +35,5 @@ $nomDuBuilder([
 == Documentation ==
  - Créer une librairie : https://jenkins.io/doc/book/pipeline/shared-libraries/[Documentation Jenkins]
  - Tester un jenkinsfile : https://github.com/jenkinsci/JenkinsPipelineUnit[Projet Github]
+ - Exemple : https://github.com/SAP/jenkins-library[librairie SAP]
+ - Exemple simple : https://github.com/ChrisCooney/jenkins-global-library-simple[jenkins-global-library-simple]

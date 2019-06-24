@@ -1,6 +1,11 @@
-def call(def config){
+def call(def config) {
 
-    echoColor 'Paramètres :\n' + config.collect { "\t$it.key : $it.value" }.join('\n'), 'bleu'
+    echoColor 'Configuration du build :', "bleu"
+    echoColor("""
+Paramètres :
+${config.collect { "\t$it.key : $it.value" }.join('\n')}
+""", 'bleu')
+
 
     echoColor 'Version des outils :', 'bleu'
 

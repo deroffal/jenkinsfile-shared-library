@@ -1,11 +1,16 @@
+import fr.deroffal.pipeline.*
+
 def call(String name, def config) {
-    def jenkinsfile
+    findPipelineByName(name).execute config
+}
+
+private def findPipelineByName(String name) {
     switch (name) {
         case 'maven':
-            jenkinsfile = new fr.deroffal.pipeline.MavenContinuousIntegration()
-            break
+            return new MavenContinuousIntegration()
+        case 'demo':
+            return new Demo()
         default:
             throw new IllegalArgumentException('Pas encore implémenté!')
     }
-    jenkinsfile.execute(config)
 }
